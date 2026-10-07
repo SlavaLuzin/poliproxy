@@ -28,7 +28,26 @@ export default async function handler(req, res) {
 
     // Формируем URL для GET-запроса к Pollinations
     const encodedPrompt = encodeURIComponent(prompt);
-    const pollinationsUrl = `https://text.pollinations.ai/${encodedPrompt}?model=${model}`;
+    const pollinationsUrl = `https://text.pollinations.ai/${encodedPrompt}`;
+    return res.status(200).json({
+      id: `chatcmpl-${Date.now()}`,
+      object: 'chat.completion',
+      created: Math.floor(Date.now() / 1000),
+      model: model,
+      choices: [{
+        index: 0,
+        message: {
+          role: 'assistant',
+          content: pollinationsUrl
+        },
+        finish_reason: 'stop'
+      }],
+      usage: {
+        prompt_tokens: 0,
+        completion_tokens: 0,
+        total_tokens: 0
+      }
+    });
 
     // Отправляем GET-запрос к Pollinations
     const response = await fetch(pollinationsUrl);
