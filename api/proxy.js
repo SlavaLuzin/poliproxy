@@ -11,9 +11,9 @@ export default async function handler(req, res) {
   }
 
   // Принимаем только POST-запросы (как в OpenAI API)
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  // if (req.method !== 'POST') {
+  //  return res.status(405).json({ error: 'Method not allowed' });
+  // }
 
   try {
     const { messages, model = 'openai' } = req.body;
